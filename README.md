@@ -2,7 +2,7 @@
 
 An internship recruitment process assignment project in Spring Boot which meets the following requirements:
 
-```
+```java
 Application Requirements -
   Create a REST API based on MVC architecture to simulate the following::
   1. GET {{url}}/inventory
