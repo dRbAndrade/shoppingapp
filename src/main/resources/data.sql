@@ -1,0 +1,8 @@
+INSERT INTO tb_user(NAME) VALUES ('Matheus');
+INSERT INTO tb_user(NAME) VALUES ('Andrade');
+INSERT INTO tb_user(NAME) VALUES ('dRb');
+
+INSERT INTO tb_product(NAME,PRICE,AVAILABLE,ORDERED) VALUES ('Mock Product',100.0,100,0);
+
+INSERT INTO tb_coupon(NAME,"VALUE") VALUES ('OFF5',0.05);
+INSERT INTO tb_coupon(NAME,"VALUE") VALUES ('OFF10',0.10);
