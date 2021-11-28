@@ -2,6 +2,7 @@
 
 An internship recruitment process assignment project in Spring Boot which meets the following requirements:
 
+```
 Application Requirements -
   Create a REST API based on MVC architecture to simulate the following::
   1. GET {{url}}/inventory
@@ -112,3 +113,4 @@ Application Requirements -
     "orderId": orderId,
     "description": "Order not found"
   }
+```
