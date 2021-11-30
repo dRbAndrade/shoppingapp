@@ -9,8 +9,15 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.persistence.EntityNotFoundException;
+
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleEntity(EntityNotFoundException ex,WebRequest request){
+        return ResponseEntity.status(404).body("Unable to find entity");
+    }
 
     @ExceptionHandler(InvalidArgumentException.class)
     public ResponseEntity<String> handleInvalidQuantity(InvalidArgumentException ex, WebRequest request){
