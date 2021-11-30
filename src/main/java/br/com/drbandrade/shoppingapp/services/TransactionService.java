@@ -18,21 +18,19 @@ public class TransactionService {
 
     @Autowired
     private TransactionRepository transactionRepository;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private OrderRepository orderRepository;
 
     public TransactionDTO persistNew(TransactionDTO dto,double amount) {
 
         Random random = new Random();
         Transaction entity = null;
+        //this mocks the transaction payment to a random of 6 cases
         switch (random.nextInt(6)){
-            case 1: failTransaction(dto,new InvalidAmountException("Payment Failed as amount is invalid",null));break;
-            case 2: failTransaction(dto,new BankRejectionException("Payment Failed from bank",null));break;
-            case 3: failTransaction(dto,new TransactionOrderNotFoundException("Payment Failed due to invalid order id",null));break;
-            case 4: failTransaction(dto,new ServerResponseException("No response from payment server",null));break;
-            case 5: failTransaction(dto,new OrderAlreadyPaidException("Order is already paid for",null));break;
+            //this method avoids a lot of boilerplate
+            case 1: failTransaction(dto,new InvalidAmountException("Payment Failed as amount is invalid"));break;
+            case 2: failTransaction(dto,new BankRejectionException("Payment Failed from bank"));break;
+            case 3: failTransaction(dto,new TransactionOrderNotFoundException("Payment Failed due to invalid order id"));break;
+            case 4: failTransaction(dto,new ServerResponseException("No response from payment server"));break;
+            case 5: failTransaction(dto,new OrderAlreadyPaidException("Order is already paid for"));break;
             default: {
                 dto.setStatus(OrderStatus.SUCCESSFUL);
                 entity = transactionRepository.save(new Transaction(dto));
@@ -42,6 +40,11 @@ public class TransactionService {
     }
 
     private void failTransaction(TransactionDTO dto,TransactionException ex) {
+        //This creates a DTO specifically to build the failed
+        //message requested on the assignment requirements and
+        //throws the personalized exceptions, so it can be treated
+        //on the controller advisor. Setting the DTO as a field in the exception
+        // makes it very easy to transmit its values to the advisor
         FailedTransactionDTO failedTransaction = new FailedTransactionDTO(dto);
         failedTransaction.setStatus(OrderStatus.FAILED);
         failedTransaction.setDescription(ex.getMessage());

@@ -19,12 +19,10 @@ public class OrderProduct implements Serializable {
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
-
     @MapsId("productId")
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-
     private Integer quantity;
 
     public OrderProduct() {}

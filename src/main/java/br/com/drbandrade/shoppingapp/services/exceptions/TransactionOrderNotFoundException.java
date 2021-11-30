@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 public class TransactionOrderNotFoundException extends TransactionException{
 
-
-    public TransactionOrderNotFoundException(String message, FailedTransactionDTO dto) {
-        super(message, dto);
+    public TransactionOrderNotFoundException(String message) {
+        super(message);
     }
 }

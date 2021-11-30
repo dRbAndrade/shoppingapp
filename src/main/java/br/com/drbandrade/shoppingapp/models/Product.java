@@ -32,15 +32,4 @@ public class Product implements Serializable {
         this.available = dto.getAvailable();
     }
 
-    @Override
-    public String toString() {
-        return "Product{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", ordered=" + ordered +
-                ", price=" + price +
-                ", available=" + available +
-                ", orders=" + orders +
-                '}';
-    }
 }

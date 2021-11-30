@@ -27,6 +27,7 @@ public class FailedTransactionDTO implements Serializable{
         this.status = entity.getStatus();
         this.description = entity.getDescription();
     }
+
     public FailedTransactionDTO(TransactionDTO dto) {
         this.userId = dto.getUserId();
         this.orderId = dto.getOrderId();
@@ -34,14 +35,4 @@ public class FailedTransactionDTO implements Serializable{
         this.status = dto.getStatus();
     }
 
-    @Override
-    public String toString() {
-        return "FailedTransactionDTO{" +
-                "userId=" + userId +
-                ", orderId=" + orderId +
-                ", id='" + id + '\'' +
-                ", status=" + status +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }

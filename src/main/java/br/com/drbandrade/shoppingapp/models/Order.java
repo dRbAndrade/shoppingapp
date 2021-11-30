@@ -1,7 +1,9 @@
 package br.com.drbandrade.shoppingapp.models;
 
 import br.com.drbandrade.shoppingapp.dtos.OrderDTO;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -19,22 +21,22 @@ public class Order implements Serializable{
     private Long id;
     @OneToMany(mappedBy = "order",fetch = FetchType.EAGER)
     List<OrderProduct>  products;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     private double amount;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
     private Instant date;
 
     public Order() {}
 
     public Order(OrderDTO dto) {
         this.coupon = dto.getCoupon()==null?null:new Coupon(dto.getCoupon());
-        this.status = dto.getCoupon()==null?null:dto.getStatus();
+        this.status = dto.getStatus();
     }
 
     public Order(Long id) {
@@ -58,4 +60,5 @@ public class Order implements Serializable{
     public void prePersist(){
         date = Instant.now();
     }
+
 }

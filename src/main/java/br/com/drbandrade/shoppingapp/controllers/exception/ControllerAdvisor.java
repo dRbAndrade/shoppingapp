@@ -16,30 +16,37 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
     public ResponseEntity<String> handleInvalidQuantity(InvalidArgumentException ex, WebRequest request){
         return ResponseEntity.status(404).body("Invalid quantity.");
     }
+
     @ExceptionHandler(CouponException.class)
     public ResponseEntity<String> handleInvalidCoupon(CouponException ex, WebRequest request){
         return ResponseEntity.status(404).body("Invalid coupon");
     }
+
     @ExceptionHandler(InvalidAmountException.class)
     public ResponseEntity<FailedTransactionDTO> handleInvalidAmount(InvalidAmountException ex, WebRequest request){
         return ResponseEntity.status(400).body(ex.getDto());
     }
+
     @ExceptionHandler(BankRejectionException.class)
     public ResponseEntity<FailedTransactionDTO> handleBankRejection(BankRejectionException ex, WebRequest request){
         return ResponseEntity.status(400).body(ex.getDto());
     }
+
     @ExceptionHandler(TransactionOrderNotFoundException.class)
     public ResponseEntity<FailedTransactionDTO> handleTransactionOrderNotFound(TransactionOrderNotFoundException ex, WebRequest request){
         return ResponseEntity.status(400).body(ex.getDto());
     }
+
     @ExceptionHandler(ServerResponseException.class)
     public ResponseEntity<FailedTransactionDTO> handleServerFail(ServerResponseException ex, WebRequest request){
         return ResponseEntity.status(400).body(ex.getDto());
     }
+
     @ExceptionHandler(OrderAlreadyPaidException.class)
     public ResponseEntity<FailedTransactionDTO> handleAlreadyPaid(OrderAlreadyPaidException ex, WebRequest request){
         return ResponseEntity.status(400).body(ex.getDto());
     }
+
     @ExceptionHandler(OrderNotFoundException.class)
     public ResponseEntity<NoOrderDTO> handleOrderNotFound(OrderNotFoundException ex, WebRequest request){
         NoOrderDTO response = new NoOrderDTO(ex.getOrderId());

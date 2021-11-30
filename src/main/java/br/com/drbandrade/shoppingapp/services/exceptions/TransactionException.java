@@ -15,4 +15,8 @@ public class TransactionException extends RuntimeException{
         this.dto = dto;
     }
 
+    public TransactionException(String message) {
+        super(message);
+    }
+
 }

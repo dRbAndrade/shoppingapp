@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 public class OrderAlreadyPaidException extends TransactionException{
 
-
-    public OrderAlreadyPaidException(String message, FailedTransactionDTO dto) {
-        super(message, dto);
+    public OrderAlreadyPaidException(String message) {
+        super(message);
     }
 }

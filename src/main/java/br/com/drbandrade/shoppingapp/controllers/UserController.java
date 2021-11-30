@@ -18,29 +18,32 @@ public class UserController {
 
     @Autowired
     private UserService service;
+
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findPaged(Pageable pageable){
-
         Page<UserDTO> response = service.findPaged(pageable);
         return ResponseEntity.ok(response);
-
     }
+
     @GetMapping("/{id}/orders")
     public ResponseEntity<List<OrderSimplifiedDTO>> findSimplifiedOrders(@PathVariable Long id){
         List<OrderSimplifiedDTO> response = service.findOrdersById(id);
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/{userId}/orders/{orderId}")
-    public ResponseEntity<OrderTransactionsDTO> findOrderTransactions(
-            @PathVariable Long userId,@PathVariable Long orderId) {
+    public ResponseEntity<OrderTransactionsDTO> findOrderTransactions(@PathVariable Long userId,
+                                                                      @PathVariable Long orderId) {
         OrderTransactionsDTO response = service.findOrderTransactions(userId,orderId);
         return ResponseEntity.ok(response);
     }
+
     @PostMapping
     public ResponseEntity<UserDTO> persistNew(@RequestBody UserDTO dto){
         UserDTO response = service.persistNew(dto);
         return ResponseEntity.ok(response);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO dto){
         UserDTO response = service.update(id,dto);

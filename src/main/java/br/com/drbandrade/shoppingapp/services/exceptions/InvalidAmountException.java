@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 public class InvalidAmountException extends TransactionException{
 
-
-    public InvalidAmountException(String message, FailedTransactionDTO dto) {
-        super(message, dto);
+    public InvalidAmountException(String message) {
+        super(message);
     }
 }

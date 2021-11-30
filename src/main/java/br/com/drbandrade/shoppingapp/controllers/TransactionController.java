@@ -1,8 +1,6 @@
 package br.com.drbandrade.shoppingapp.controllers;
 
-import br.com.drbandrade.shoppingapp.dtos.CouponDTO;
 import br.com.drbandrade.shoppingapp.dtos.TransactionDTO;
-import br.com.drbandrade.shoppingapp.dtos.ProductDTO;
 import br.com.drbandrade.shoppingapp.services.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -10,15 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-
 @RestController
 @RequestMapping("/transactions")
 public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
-
 
     @GetMapping
     public ResponseEntity<Page<TransactionDTO>> findPaged(Pageable pageable){
@@ -34,7 +29,6 @@ public class TransactionController {
 
         TransactionDTO response = new TransactionDTO(userId,orderId);
         response = transactionService.persistNew(response,amount);
-
         return ResponseEntity.ok(response);
 
     }

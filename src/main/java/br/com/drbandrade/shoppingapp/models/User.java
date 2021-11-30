@@ -1,7 +1,6 @@
 package br.com.drbandrade.shoppingapp.models;
 
 import br.com.drbandrade.shoppingapp.dtos.UserDTO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 

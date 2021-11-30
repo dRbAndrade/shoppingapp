@@ -38,41 +38,60 @@ public class OrderService {
 
         Order order = new Order(orderDTO);
         String couponName = order.getCoupon()==null?null:order.getCoupon().getName();
+        //This asserts the coupon provided by the controller exists otherwise
+        //throw a personalized exception to be treated by the advisor to show
+        //a personalized response as required by the assignment
         Coupon coupon = couponName==null ? null: couponRepository.findByName(couponName).orElseThrow(
                 ()-> new CouponException(String.format("No Coupon with name: %s was found",couponName))
         );
         User user = userRepository.getById(orderDTO.getUserID());
+        //this asserts that the coupon was not used by this user before
+        //and throws an exception just like above
         if(user.getUsedCoupons().contains(coupon)){
             throw new CouponException("This coupon has already been used by this user");
         }
-        if(coupon!=null)user.getUsedCoupons().add(coupon);
-        user = userRepository.save(user);
         Map<Product,Integer> products = new HashMap<>();
         productMap.forEach((product,quantity)->{
-            Product p =  productRepository.getById(product.getId());
+            Product p = productRepository.getById(product.getId());
             if(p.getAvailable()<quantity||quantity<0){
+                //this asserts that the quantity provided by the controller
+                //and the loop makes it easy to expand to multiple products.
+                //Exception same as above
                 throw new InvalidArgumentException("Invalid quantity");
             }
+            //this updates the product ordered and available fields
+            //on the database and adds it to the product list of the order
             p.setOrdered(p.getOrdered()+quantity);
             p.setAvailable(p.getAvailable()-quantity);
             p = productRepository.save(p);
             products.put(p,quantity);
-
         });
         order.setCoupon(coupon);
         order.setUser(user);
+        //An initial status for the order so it doesn't start
+        //with null or successfull
         order.setStatus(OrderStatus.PENDING);
         final double[] productTotal = {0};
-        products.forEach((product,quantity)-> productTotal[0] +=product.getPrice()*quantity);
+        //this calculates the total of all products on the order list.
+        //although there's always only one in our case, this makes easy
+        //to expand to more products
+        products.forEach((product,quantity)-> productTotal[0]+=product.getPrice()*quantity);
+        //the value to be discounted from the total if there is a valid coupon
+        //if there is no (valid) coupon, standard value of 0 is applied
         double couponValue = order.getCoupon()==null?0.0:order.getCoupon().getValue();
         order.setAmount(productTotal[0]*((1-couponValue)));
         order = orderRepository.save(order);
+        //if a coupon was used in this order,
+        //we update the user used coupons
+        if(coupon!=null)user.getUsedCoupons().add(coupon);
+        userRepository.save(user);
+        //this updates the intermediate order_product table
         persistOrderProducts(order,products);
+        //here we start building our response
         OrderDTO response = new OrderDTO(order);
         Map<ProductDTO,Integer> productDTOMap = new HashMap<>();
         products.forEach((product,quantity)->productDTOMap.put(new ProductDTO(product),quantity));
         response.setProducts(productDTOMap);
-
         return response;
 
     }
@@ -91,6 +110,11 @@ public class OrderService {
         Page<Order> entityPage =orderRepository.findAll(pageable);
         Page<OrderDTO> response = entityPage.map(OrderDTO::new);
         final int[] index = {0};
+        //Our entity has a OrderProduct class list to represent
+        //the relationship on the database between it and the intermediate
+        //table. But our DTO has a much simpler Map class that has just
+        //the productDTOs and their quantities.
+        //This makes the casting between these two.
         entityPage.forEach(e->{
             List<OrderProduct> orderProducts = e.getProducts();
             Map<ProductDTO,Integer> products = new HashMap<>();

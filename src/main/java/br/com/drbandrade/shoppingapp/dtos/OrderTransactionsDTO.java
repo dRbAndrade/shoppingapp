@@ -24,8 +24,10 @@ public class OrderTransactionsDTO {
 
     public OrderTransactionsDTO(Order entity, List<Transaction> transactions) {
         this.id = entity.getId();
+        //Same as OrderDTO
         this.coupon = entity.getCoupon()==null?null:entity.getCoupon().getName();
         this.amount = entity.getAmount();
+        //Same as OrderSimplifiedDTO
         this.orderedDate = ZonedDateTime.ofInstant(entity.getDate(), ZoneId.systemDefault());
         this.transactions = transactions.stream().map(TransactionSimplifiedDTO::new).collect(Collectors.toList());
     }

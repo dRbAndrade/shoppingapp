@@ -5,7 +5,6 @@ import br.com.drbandrade.shoppingapp.models.Transaction;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.io.Serializable;
 
 @Getter
@@ -32,13 +31,4 @@ public class TransactionDTO implements Serializable{
         this.status = entity.getStatus();
     }
 
-    @Override
-    public String toString() {
-        return "TransactionDTO{" +
-                "userId=" + userId +
-                ", orderId=" + orderId +
-                ", id='" + id + '\'' +
-                ", status=" + status +
-                '}';
-    }
 }

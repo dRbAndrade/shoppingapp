@@ -8,8 +8,7 @@ import lombok.Setter;
 @Setter
 public class BankRejectionException extends TransactionException{
 
-
-    public BankRejectionException(String message, FailedTransactionDTO dto) {
-        super(message, dto);
+    public BankRejectionException(String message) {
+        super(message);
     }
 }

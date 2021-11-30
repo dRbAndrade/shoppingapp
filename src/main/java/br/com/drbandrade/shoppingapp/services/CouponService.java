@@ -34,6 +34,7 @@ public class CouponService {
         );
         return new CouponDTO(entity);
     }
+
     @Transactional(readOnly = true)
     public CouponDTO findByName(String name){
         Coupon entity = repository.findByName(name).orElseThrow(
@@ -51,6 +52,7 @@ public class CouponService {
         return new CouponDTO(entity);
 
     }
+
     @Transactional
     public void delete(long id){
         repository.deleteById(id);

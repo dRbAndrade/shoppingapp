@@ -1,12 +1,9 @@
 package br.com.drbandrade.shoppingapp.dtos;
 
-import br.com.drbandrade.shoppingapp.models.Order;
 import br.com.drbandrade.shoppingapp.models.User;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -33,4 +30,5 @@ public class UserDTO {
     public UserDTO(Long id) {
         this.id = id;
     }
+
 }

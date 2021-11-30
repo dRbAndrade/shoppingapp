@@ -1,10 +1,10 @@
 package br.com.drbandrade.shoppingapp.dtos;
 
-import br.com.drbandrade.shoppingapp.models.*;
+import br.com.drbandrade.shoppingapp.models.Order;
+import br.com.drbandrade.shoppingapp.models.OrderStatus;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.Instant;
 import java.util.Map;
 
 @Getter
@@ -21,6 +21,9 @@ public class OrderDTO {
 
     public OrderDTO(Order entity) {
         this.id = entity.getId();
+        //Create a new CouponDTO from Coupon entity
+        //Since an order may or may not have a coupon
+        //this check avoids null pointer exceptions
         this.coupon = entity.getCoupon()==null?null:new CouponDTO(entity.getCoupon());
         this.status = entity.getStatus();
         this.userID = entity.getUser().getId();

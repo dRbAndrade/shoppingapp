@@ -9,7 +9,7 @@ import lombok.Setter;
 public class ServerResponseException extends TransactionException{
 
 
-    public ServerResponseException(String message, FailedTransactionDTO dto) {
-        super(message, dto);
+    public ServerResponseException(String message) {
+        super(message);
     }
 }

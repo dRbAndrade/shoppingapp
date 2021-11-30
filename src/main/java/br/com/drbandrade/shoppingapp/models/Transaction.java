@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Getter
 @Setter
@@ -31,26 +30,22 @@ public class Transaction implements Serializable{
     public Transaction(TransactionDTO dto) {
         this.user = new User(dto.getUserId());
         this.order = new Order(dto.getOrderId());
+        //As the DTO's id is prepended with "tran" and padded
+        //with 0s to the left, this removes the letters and
+        //casts the string to a numeric value and also
+        //avoids null pointer exceptions as DTOs might not
+        //have an ID initiated
         this.id = dto.getId()==null?null:Long.valueOf(dto.getId().replaceAll("[^0-9]",""));
-            this.status = dto.getStatus();
+        this.status = dto.getStatus();
         this.description = null;
     }
     public Transaction(FailedTransactionDTO dto) {
         this.user = new User(dto.getUserId());
         this.order = new Order(dto.getOrderId());
+        //Same as above
         this.id = dto.getId()==null?null:Long.valueOf(dto.getId().replaceAll("[^0-9]",""));
         this.status = dto.getStatus();
         this.description = dto.getDescription();
     }
 
-    @Override
-    public String toString() {
-        return "Transaction{" +
-                "user=" + user +
-                ", order=" + order +
-                ", id=" + id +
-                ", status=" + status +
-                ", description='" + description + '\'' +
-                '}';
-    }
 }
