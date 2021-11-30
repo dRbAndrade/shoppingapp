@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +69,7 @@ public class OrderService {
         order.setUser(user);
         //An initial status for the order so it doesn't start
         //with null or successfull
-        order.setStatus(OrderStatus.PENDING);
+        order.setStatus(Status.PENDING);
         final double[] productTotal = {0};
         //this calculates the total of all products on the order list.
         //although there's always only one in our case, this makes easy

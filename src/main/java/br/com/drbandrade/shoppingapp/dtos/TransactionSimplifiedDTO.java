@@ -1,6 +1,6 @@
 package br.com.drbandrade.shoppingapp.dtos;
 
-import br.com.drbandrade.shoppingapp.models.OrderStatus;
+import br.com.drbandrade.shoppingapp.models.Status;
 import br.com.drbandrade.shoppingapp.models.Transaction;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,7 +12,7 @@ import java.io.Serializable;
 public class TransactionSimplifiedDTO implements Serializable{
 
     private String id;
-    private OrderStatus status;
+    private Status status;
 
     public TransactionSimplifiedDTO() {
     }

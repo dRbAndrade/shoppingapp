@@ -32,7 +32,7 @@ public class TransactionService {
             case 4: failTransaction(dto,new ServerResponseException("No response from payment server"));break;
             case 5: failTransaction(dto,new OrderAlreadyPaidException("Order is already paid for"));break;
             default: {
-                dto.setStatus(OrderStatus.SUCCESSFUL);
+                dto.setStatus(Status.SUCCESSFUL);
                 entity = transactionRepository.save(new Transaction(dto));
             }
         }
@@ -46,10 +46,11 @@ public class TransactionService {
         //on the controller advisor. Setting the DTO as a field in the exception
         // makes it very easy to transmit its values to the advisor
         FailedTransactionDTO failedTransaction = new FailedTransactionDTO(dto);
-        failedTransaction.setStatus(OrderStatus.FAILED);
+        failedTransaction.setStatus(Status.FAILED);
         failedTransaction.setDescription(ex.getMessage());
-        Transaction entity = transactionRepository.save(new Transaction(failedTransaction));
-        ex.setDto(new FailedTransactionDTO(entity));
+        Long id = transactionRepository.save(new Transaction(failedTransaction)).getId();
+        failedTransaction.setId(String.format("tran%09d",id));
+        ex.setDto(failedTransaction);
         throw ex;
     }
 

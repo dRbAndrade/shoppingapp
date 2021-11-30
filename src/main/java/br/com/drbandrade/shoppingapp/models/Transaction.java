@@ -15,20 +15,17 @@ import java.io.Serializable;
 public class Transaction implements Serializable{
 
     @ManyToOne
-    private User user;
-    @ManyToOne
     private Order order;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private OrderStatus status;
+    private Status status;
     private String description;
 
     public Transaction() {
     }
 
     public Transaction(TransactionDTO dto) {
-        this.user = new User(dto.getUserId());
         this.order = new Order(dto.getOrderId());
         //As the DTO's id is prepended with "tran" and padded
         //with 0s to the left, this removes the letters and
@@ -40,7 +37,6 @@ public class Transaction implements Serializable{
         this.description = null;
     }
     public Transaction(FailedTransactionDTO dto) {
-        this.user = new User(dto.getUserId());
         this.order = new Order(dto.getOrderId());
         //Same as above
         this.id = dto.getId()==null?null:Long.valueOf(dto.getId().replaceAll("[^0-9]",""));

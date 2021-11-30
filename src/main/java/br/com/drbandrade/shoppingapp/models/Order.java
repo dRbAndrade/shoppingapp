@@ -25,7 +25,7 @@ public class Order implements Serializable{
     @JoinColumn(name = "coupon_id")
     private Coupon coupon;
     @Enumerated(EnumType.STRING)
-    private OrderStatus status;
+    private Status status;
     private double amount;
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -61,4 +61,16 @@ public class Order implements Serializable{
         date = Instant.now();
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", products=" + products +
+                ", coupon=" + coupon +
+                ", status=" + status +
+                ", amount=" + amount +
+                ", user=" + user +
+                ", date=" + date +
+                '}';
+    }
 }

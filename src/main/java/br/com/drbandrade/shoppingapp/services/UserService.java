@@ -85,7 +85,6 @@ public class UserService {
         if(user.getOrders().contains(new Order(orderId))) order = orderRepository.getById(orderId);
         else throw new OrderNotFoundException(String.format("No order with id %d was found for user with id %d",orderId,userId),orderId);
         List<Transaction> transactions = transactionRepository.findByOrderId(orderId);
-        System.out.println(transactions);
         return new OrderTransactionsDTO(order,transactions);
     }
 }

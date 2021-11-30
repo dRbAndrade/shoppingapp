@@ -1,7 +1,7 @@
 package br.com.drbandrade.shoppingapp.dtos;
 
 import br.com.drbandrade.shoppingapp.models.Order;
-import br.com.drbandrade.shoppingapp.models.OrderStatus;
+import br.com.drbandrade.shoppingapp.models.Status;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +16,7 @@ public class OrderDTO {
     private Map<ProductDTO,Integer> products;
     private double amount;
     private CouponDTO coupon;
-    private OrderStatus status;
+    private Status status;
     public OrderDTO() {}
 
     public OrderDTO(Order entity) {

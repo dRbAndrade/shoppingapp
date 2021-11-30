@@ -29,4 +29,14 @@ public class ProductDTO {
         this.ordered = entity.getOrdered();
     }
 
+    @Override
+    public String toString() {
+        return "ProductDTO{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", ordered=" + ordered +
+                ", price=" + price +
+                ", available=" + available +
+                '}';
+    }
 }
