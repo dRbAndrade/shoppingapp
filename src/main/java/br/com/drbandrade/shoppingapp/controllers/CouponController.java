@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/coupons")
 public class CouponController {
 
-    @Autowired
+
     private CouponService service;
+
+    @Autowired
+    public CouponController(CouponService service) {
+        this.service = service;
+    }
 
     @GetMapping("/fetchCoupons")
     public ResponseEntity<Page<CouponDTO>> findPaged(Pageable pageable){

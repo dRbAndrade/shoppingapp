@@ -13,8 +13,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CouponService {
 
-    @Autowired
+
     private CouponRepository repository;
+
+    @Autowired
+    public CouponService(CouponRepository repository) {
+        this.repository = repository;
+    }
 
     @Transactional
     public CouponDTO persistNew(CouponDTO dto){

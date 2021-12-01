@@ -21,16 +21,24 @@ import java.util.Map;
 @Service
 public class OrderService {
 
-    @Autowired
     private OrderRepository orderRepository;
-    @Autowired
     private OrderProductRepository orderProductRepository;
-    @Autowired
     private ProductRepository productRepository;
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private CouponRepository couponRepository;
+
+    @Autowired
+    public OrderService(OrderRepository orderRepository,
+                        OrderProductRepository orderProductRepository,
+                        ProductRepository productRepository,
+                        UserRepository userRepository,
+                        CouponRepository couponRepository) {
+        this.orderRepository = orderRepository;
+        this.orderProductRepository = orderProductRepository;
+        this.productRepository = productRepository;
+        this.userRepository = userRepository;
+        this.couponRepository = couponRepository;
+    }
 
     @Transactional
     public OrderDTO persistNew(Map<ProductDTO,Integer> productMap, OrderDTO orderDTO) {

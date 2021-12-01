@@ -12,8 +12,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/transactions")
 public class TransactionController {
 
-    @Autowired
     private TransactionService transactionService;
+
+    @Autowired
+    public TransactionController(TransactionService transactionService) {
+        this.transactionService = transactionService;
+    }
 
     @GetMapping
     public ResponseEntity<Page<TransactionDTO>> findPaged(Pageable pageable){

@@ -24,12 +24,18 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    @Autowired
     private UserRepository userRepository;
-    @Autowired
     private OrderRepository orderRepository;
-    @Autowired
     private TransactionRepository transactionRepository;
+
+    public UserService(UserRepository userRepository, OrderRepository orderRepository, TransactionRepository transactionRepository) {
+        this.userRepository = userRepository;
+        this.orderRepository = orderRepository;
+        this.transactionRepository = transactionRepository;
+    }
+
+    @Autowired
+
 
     @Transactional
     public UserDTO persistNew(UserDTO dto){

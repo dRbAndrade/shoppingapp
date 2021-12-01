@@ -16,8 +16,12 @@ import java.util.List;
 @RequestMapping("/users")
 public class UserController {
 
-    @Autowired
     private UserService service;
+
+    @Autowired
+    public UserController(UserService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public ResponseEntity<Page<UserDTO>> findPaged(Pageable pageable){

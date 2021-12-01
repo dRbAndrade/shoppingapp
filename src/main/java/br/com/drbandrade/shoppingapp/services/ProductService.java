@@ -13,8 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductService {
 
-    @Autowired
     private ProductRepository repository;
+
+    @Autowired
+    public ProductService(ProductRepository repository) {
+        this.repository = repository;
+    }
 
     @Transactional
     public ProductDTO persistNew(ProductDTO dto){

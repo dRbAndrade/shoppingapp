@@ -16,10 +16,14 @@ import java.util.*;
 @Service
 public class TransactionService {
 
-    @Autowired
     private TransactionRepository transactionRepository;
 
-    public TransactionDTO persistNew(TransactionDTO dto,double amount) {
+    @Autowired
+    public TransactionService(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
+    }
+
+    public TransactionDTO persistNew(TransactionDTO dto, double amount) {
 
         Random random = new Random();
         Transaction entity = null;
@@ -44,7 +48,7 @@ public class TransactionService {
         //message requested on the assignment requirements and
         //throws the personalized exceptions, so it can be treated
         //on the controller advisor. Setting the DTO as a field in the exception
-        // makes it very easy to transmit its values to the advisor
+        //makes it very easy to transmit its values to the advisor
         FailedTransactionDTO failedTransaction = new FailedTransactionDTO(dto);
         failedTransaction.setStatus(Status.FAILED);
         failedTransaction.setDescription(ex.getMessage());

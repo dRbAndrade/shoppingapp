@@ -14,8 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
+
     private ProductService service;
+
+    @Autowired
+    public ProductController(ProductService service) {
+        this.service = service;
+    }
 
     @GetMapping("/inventory")
     public ResponseEntity<Page<ProductDTO>> findPaged(Pageable pageable){
