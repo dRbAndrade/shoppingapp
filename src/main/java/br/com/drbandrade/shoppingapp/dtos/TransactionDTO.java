@@ -15,6 +15,7 @@ public class TransactionDTO implements Serializable{
     private Long orderId;
     private String id;
     private Status status;
+    private String description;
 
     public TransactionDTO() {
     }
@@ -25,10 +26,11 @@ public class TransactionDTO implements Serializable{
     }
 
     public TransactionDTO(Transaction entity) {
-        this.userId = entity.getOrder().getUser().getId();
-        this.orderId = entity.getOrder().getId();
+        this.userId = entity.getOrder()==null?null:entity.getOrder().getUser().getId();
+        this.orderId = entity.getOrder()==null?null:entity.getOrder().getId();
         this.id = String.format("tran%09d",entity.getId());
         this.status = entity.getStatus();
+        this.description = entity.getDescription();
     }
 
 }

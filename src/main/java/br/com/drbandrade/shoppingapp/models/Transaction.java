@@ -19,6 +19,7 @@ public class Transaction implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Enumerated(EnumType.STRING)
     private Status status;
     private String description;
 
@@ -37,11 +38,20 @@ public class Transaction implements Serializable{
         this.description = null;
     }
     public Transaction(FailedTransactionDTO dto) {
-        this.order = new Order(dto.getOrderId());
+        this.order = dto.getOrderId()==null?null:new Order(dto.getOrderId());
         //Same as above
         this.id = dto.getId()==null?null:Long.valueOf(dto.getId().replaceAll("[^0-9]",""));
         this.status = dto.getStatus();
         this.description = dto.getDescription();
     }
 
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "order=" + order +
+                ", id=" + id +
+                ", status=" + status +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

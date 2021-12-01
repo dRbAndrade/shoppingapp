@@ -27,4 +27,11 @@ public class TransactionSimplifiedDTO implements Serializable{
         this.status = entity.getStatus();
     }
 
+    @Override
+    public String toString() {
+        return "TransactionSimplifiedDTO{" +
+                "id='" + id + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

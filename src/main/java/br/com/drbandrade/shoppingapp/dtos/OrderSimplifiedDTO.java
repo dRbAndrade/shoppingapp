@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -13,7 +14,7 @@ public class OrderSimplifiedDTO {
 
     private Long id;
     private double amount;
-    private ZonedDateTime orderedDate;
+    private String orderedDate;
     private String coupon;
 
     public OrderSimplifiedDTO() {}
@@ -25,7 +26,17 @@ public class OrderSimplifiedDTO {
         this.amount = entity.getAmount();
         //Since Instant class, which was used to persist the date information,
         //uses UTC time zone, this adapts time to your system's default timezone
-        this.orderedDate = ZonedDateTime.ofInstant(entity.getDate(), ZoneId.systemDefault());
+        //and formats it to not show the time
+        this.orderedDate = ZonedDateTime
+                .ofInstant(entity.getDate(), ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+    }
+
+    public OrderSimplifiedDTO(Long id, double amount, String orderedDate, String coupon) {
+        this.id = id;
+        this.amount = amount;
+        this.orderedDate = orderedDate;
+        this.coupon = coupon;
     }
 
 }

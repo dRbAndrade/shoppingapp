@@ -35,4 +35,14 @@ public class User implements Serializable {
     public User(Long id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", orders=" + orders +
+                ", usedCoupons=" + usedCoupons +
+                '}';
+    }
 }

@@ -24,17 +24,17 @@ import java.util.stream.Collectors;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    private OrderRepository orderRepository;
-    private TransactionRepository transactionRepository;
+    private final UserRepository userRepository;
+    private final OrderRepository orderRepository;
+    private final TransactionRepository transactionRepository;
 
+    @Autowired
     public UserService(UserRepository userRepository, OrderRepository orderRepository, TransactionRepository transactionRepository) {
         this.userRepository = userRepository;
         this.orderRepository = orderRepository;
         this.transactionRepository = transactionRepository;
     }
 
-    @Autowired
 
 
     @Transactional
@@ -78,7 +78,10 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<OrderSimplifiedDTO> findOrdersById(Long id) {
-        List<Order> orders = orderRepository.findByUser(new User(id));
+        User user = userRepository.findById(id).orElseThrow(
+                ()-> new UserNotFoundException(String.format("No user with id: %d was found",id))
+        );
+        List<Order> orders = orderRepository.findByUser(user);
         return orders.stream().map(OrderSimplifiedDTO::new).collect(Collectors.toList());
     }
 

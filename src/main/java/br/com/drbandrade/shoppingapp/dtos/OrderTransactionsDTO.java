@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,7 @@ public class OrderTransactionsDTO {
 
     private Long id;
     private double amount;
-    private ZonedDateTime orderedDate;
+    private String orderedDate;
     private String coupon;
     private List<TransactionSimplifiedDTO> transactions;
 
@@ -28,7 +29,9 @@ public class OrderTransactionsDTO {
         this.coupon = entity.getCoupon()==null?null:entity.getCoupon().getName();
         this.amount = entity.getAmount();
         //Same as OrderSimplifiedDTO
-        this.orderedDate = ZonedDateTime.ofInstant(entity.getDate(), ZoneId.systemDefault());
+        this.orderedDate = ZonedDateTime
+                .ofInstant(entity.getDate(), ZoneId.systemDefault())
+                .format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
         this.transactions = transactions.stream().map(TransactionSimplifiedDTO::new).collect(Collectors.toList());
     }
 

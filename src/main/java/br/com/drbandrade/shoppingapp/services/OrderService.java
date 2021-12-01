@@ -7,6 +7,7 @@ import br.com.drbandrade.shoppingapp.repositories.*;
 import br.com.drbandrade.shoppingapp.services.exceptions.CouponException;
 import br.com.drbandrade.shoppingapp.services.exceptions.InvalidArgumentException;
 import br.com.drbandrade.shoppingapp.services.exceptions.OrderNotFoundException;
+import br.com.drbandrade.shoppingapp.services.exceptions.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,9 +42,13 @@ public class OrderService {
     }
 
     @Transactional
-    public OrderDTO persistNew(Map<ProductDTO,Integer> productMap, OrderDTO orderDTO) {
+    public OrderDTO persistNew(Map<ProductDTO,Integer> productMap, OrderDTO dto) {
 
-        Order order = new Order(orderDTO);
+        //This check if the user id passed is valid
+        User user = userRepository.findById(dto.getUserID()).orElseThrow(
+                ()-> new UserNotFoundException(String.format("No user with id: %d was found",dto.getUserID()))
+        );
+        Order order = new Order(dto);
         String couponName = order.getCoupon()==null?null:order.getCoupon().getName();
         //This asserts the coupon provided by the controller exists otherwise
         //throw a personalized exception to be treated by the advisor to show
@@ -51,7 +56,6 @@ public class OrderService {
         Coupon coupon = couponName==null ? null: couponRepository.findByName(couponName).orElseThrow(
                 ()-> new CouponException(String.format("No Coupon with name: %s was found",couponName))
         );
-        User user = userRepository.getById(orderDTO.getUserID());
         //this asserts that the coupon was not used by this user before
         //and throws an exception just like above
         if(user.getUsedCoupons().contains(coupon)){

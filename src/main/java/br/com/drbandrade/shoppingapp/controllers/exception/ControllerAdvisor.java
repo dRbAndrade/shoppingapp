@@ -14,9 +14,9 @@ import javax.persistence.EntityNotFoundException;
 @ControllerAdvice
 public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleEntity(EntityNotFoundException ex,WebRequest request){
-        return ResponseEntity.status(404).body("Unable to find entity");
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<String> handleEntity(UserNotFoundException ex,WebRequest request){
+        return ResponseEntity.status(404).body(ex.getMessage());
     }
 
     @ExceptionHandler(InvalidArgumentException.class)
@@ -46,11 +46,15 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(ServerResponseException.class)
     public ResponseEntity<FailedTransactionDTO> handleServerFail(ServerResponseException ex, WebRequest request){
-        return ResponseEntity.status(400).body(ex.getDto());
+        return ResponseEntity.status(504).body(ex.getDto());
     }
 
     @ExceptionHandler(OrderAlreadyPaidException.class)
     public ResponseEntity<FailedTransactionDTO> handleAlreadyPaid(OrderAlreadyPaidException ex, WebRequest request){
+        return ResponseEntity.status(400).body(ex.getDto());
+    }
+    @ExceptionHandler(OrderDoesNotBelongToUserException.class)
+    public ResponseEntity<FailedTransactionDTO> handleAlreadyPaid(OrderDoesNotBelongToUserException ex, WebRequest request){
         return ResponseEntity.status(400).body(ex.getDto());
     }
 
